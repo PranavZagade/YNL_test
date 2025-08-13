@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing Alert Email Preview - YourNextLease</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f3f4f6;
+            font-family: Arial, sans-serif;
+        }
+        .preview-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .preview-header {
+            background: #1f2937;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .preview-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .email-container {
+            padding: 0;
+        }
+        .email-header {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
+        .email-header p {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+            color: white;
+        }
+        .main-content {
+            background-color: white;
+            padding: 30px 20px;
+            border-radius: 0 0 16px 16px;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+        }
+        .greeting h2 {
+            color: #1f2937;
+            font-size: 20px;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+        .greeting p {
+            color: #6b7280;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .alert-details {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .alert-details h3 {
+            color: #dc2626;
+            font-size: 18px;
+            margin: 0 0 15px 0;
+            font-weight: 600;
+        }
+        .alert-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 14px;
+        }
+        .alert-grid strong {
+            color: #374151;
+        }
+        .alert-grid p {
+            margin: 5px 0 0 0;
+            color: #6b7280;
+        }
+        .matched-listings h3 {
+            color: #0369a1;
+            font-size: 18px;
+            margin: 0 0 20px 0;
+            font-weight: 600;
+        }
+        .listing-card {
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .listing-card h4 {
+            color: #1f2937;
+            font-size: 16px;
+            margin: 0 0 8px 0;
+            font-weight: 600;
+        }
+        .listing-card .property-info {
+            color: #6b7280;
+            font-size: 14px;
+            margin: 0 0 10px 0;
+        }
+        .listing-details {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .listing-details strong {
+            color: #374151;
+        }
+        .listing-details .rent {
+            margin: 5px 0 0 0;
+            color: #059669;
+            font-weight: 600;
+        }
+        .listing-details .location {
+            margin: 5px 0 0 0;
+            color: #6b7280;
+        }
+        .view-button {
+            display: inline-block;
+            background-color: #dc2626;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .additional-info {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        .additional-info p {
+            margin: 0 0 8px 0;
+        }
+        .additional-info p:last-child {
+            margin: 0;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        .footer p {
+            margin: 0 0 10px 0;
+        }
+        .footer .small {
+            margin: 0;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="preview-header">
+            <h1>📧 Listing Alert Email Preview</h1>
+            <p>This is how your listing alert emails will look with multiple matches</p>
+        </div>
+        
+        <div class="email-container">
+            <!-- Email Template Content -->
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9fafb; padding: 20px;">
+                <!-- Header -->
+                <div class="email-header">
+                    <h1>🎉 We Found Listings Matching Your Preferences!</h1>
+                    <p>Great news! We found 3 listings in New York that match your saved preferences.</p>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Greeting -->
+                    <div class="greeting">
+                        <h2>Hi John,</h2>
+                        <p>We found <strong>3 listings</strong> in <strong>New York</strong> that match your saved preferences!</p>
+                    </div>
+
+                    <!-- Alert Details -->
+                    <div class="alert-details">
+                        <h3>Your Alert Preferences</h3>
+                        <div class="alert-grid">
+                            <div>
+                                <strong>Location:</strong>
+                                <p>New York</p>
+                            </div>
+                            <div>
+                                <strong>Move-in Date:</strong>
+                                <p>September 1, 2024</p>
+                            </div>
+                            <div>
+                                <strong>Move-out Date:</strong>
+                                <p>October 1, 2024</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Matched Listings -->
+                    <div class="matched-listings">
+                        <h3>🏠 Matching Listings Found</h3>
+                        
+                        <!-- Listing 1 -->
+                        <div class="listing-card">
+                            <h4>Cozy 2BR Apartment Near Campus</h4>
+                            <p class="property-info">University Heights • 123 College Ave, New York, NY</p>
+                            <div class="listing-details">
+                                <div>
+                                    <strong>Rent:</strong>
+                                    <p class="rent">$1,200/month</p>
+                                </div>
+                                <div>
+                                    <strong>Location:</strong>
+                                    <p class="location">New York</p>
+                                </div>
+                            </div>
+                            <a href="#" class="view-button">View Listing</a>
+                        </div>
+
+                        <!-- Listing 2 -->
+                        <div class="listing-card">
+                            <h4>Modern Studio in Downtown</h4>
+                            <p class="property-info">City Center Apartments • 456 Main St, New York, NY</p>
+                            <div class="listing-details">
+                                <div>
+                                    <strong>Rent:</strong>
+                                    <p class="rent">$1,500/month</p>
+                                </div>
+                                <div>
+                                    <strong>Location:</strong>
+                                    <p class="location">New York</p>
+                                </div>
+                            </div>
+                            <a href="#" class="view-button">View Listing</a>
+                        </div>
+
+                        <!-- Listing 3 -->
+                        <div class="listing-card">
+                            <h4>Spacious 1BR with Balcony</h4>
+                            <p class="property-info">Riverside Gardens • 789 River Rd, New York, NY</p>
+                            <div class="listing-details">
+                                <div>
+                                    <strong>Rent:</strong>
+                                    <p class="rent">$1,800/month</p>
+                                </div>
+                                <div>
+                                    <strong>Location:</strong>
+                                    <p class="location">New York</p>
+                                </div>
+                            </div>
+                            <a href="#" class="view-button">View Listing</a>
+                        </div>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="additional-info">
+                        <p><strong>💡 Tip:</strong> Act quickly! Good listings often get rented fast.</p>
+                        <p>You can manage your alerts anytime from your dashboard.</p>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer">
+                    <p><strong>YourNextLease</strong><br>
+                    Your Next Lease, Made Easy.</p>
+                    <p class="small">This email was sent because you have a listing alert set up for New York.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

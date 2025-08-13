@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YourNextLease Red/White Email Templates with Better Icons</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: #f8fafc; 
+            min-height: 100vh;
+        }
+        .preview { max-width: 800px; margin: 0 auto; }
+        .email-preview { 
+            background: #ffffff; 
+            margin: 20px 0; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+        }
+        .email-header { 
+            background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%); 
+            color: white; 
+            padding: 40px 30px; 
+            text-align: center; 
+            position: relative;
+            overflow: hidden;
+        }
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(225, 29, 72, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(244, 63, 94, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .email-content { padding: 40px 30px; }
+        .email-footer { 
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); 
+            padding: 30px; 
+            text-align: center; 
+            color: #64748b; 
+            font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .button { 
+            background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%); 
+            color: white; 
+            padding: 16px 32px; 
+            text-decoration: none; 
+            border-radius: 16px; 
+            font-weight: 600; 
+            display: inline-block; 
+            font-size: 16px; 
+            box-shadow: 0 4px 14px 0 rgba(225, 29, 72, 0.4);
+            letter-spacing: 0.025em;
+            min-width: 200px;
+            transition: all 0.2s ease;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px 0 rgba(225, 29, 72, 0.5);
+        }
+        .info-box { 
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); 
+            padding: 20px; 
+            border-radius: 16px; 
+            margin: 24px 0; 
+            border: 1px solid #e2e8f0; 
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .message-preview { 
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); 
+            border-left: 4px solid #e11d48; 
+            padding: 20px; 
+            margin: 24px 0; 
+            border-radius: 0 16px 16px 0; 
+            border: 1px solid #fecaca; 
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .feature-list { 
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); 
+            border: 1px solid #fecaca; 
+            padding: 24px; 
+            border-radius: 20px; 
+            margin: 24px 0; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .quick-start { 
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); 
+            border: 1px solid #bbf7d0; 
+            padding: 24px; 
+            border-radius: 20px; 
+            margin: 24px 0; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .next-steps { 
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); 
+            border: 1px solid #fecaca; 
+            padding: 24px; 
+            border-radius: 20px; 
+            margin: 24px 0; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .tip-box { 
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); 
+            border: 1px solid #bbf7d0; 
+            padding: 20px; 
+            border-radius: 16px; 
+            margin: 24px 0; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        h1 { 
+            margin: 0 0 8px 0; 
+            font-size: 32px; 
+            font-weight: 800; 
+            letter-spacing: -0.025em; 
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h2 { 
+            color: #1e293b; 
+            margin-bottom: 24px; 
+            font-size: 24px; 
+            font-weight: 700; 
+            letter-spacing: -0.025em; 
+            line-height: 1.3;
+        }
+        h3 { 
+            color: #991b1b; 
+            margin: 0 0 20px 0; 
+            font-size: 18px; 
+            font-weight: 700; 
+            letter-spacing: -0.025em;
+        }
+        h4 { 
+            color: #166534; 
+            margin: 0; 
+            font-size: 16px; 
+            font-weight: 700; 
+            letter-spacing: -0.025em;
+        }
+        p { 
+            color: #475569; 
+            line-height: 1.7; 
+            margin-bottom: 24px; 
+            font-size: 16px; 
+            font-weight: 400;
+        }
+        .flex-center { display: flex; align-items: center; gap: 12px; }
+        .flex-start { display: flex; align-items: flex-start; gap: 12px; }
+        .grid { display: grid; gap: 12px; }
+        .grid-small { display: grid; gap: 8px; }
+        .dot { 
+            width: 8px; 
+            height: 8px; 
+            background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%); 
+            border-radius: 50%; 
+            flex-shrink: 0;
+        }
+        .dot-small { 
+            width: 6px; 
+            height: 6px; 
+            background: #e11d48; 
+            border-radius: 50%; 
+            margin-top: 8px; 
+            flex-shrink: 0;
+        }
+        .icon-circle { 
+            width: 32px; 
+            height: 32px; 
+            background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0;
+            color: white;
+        }
+        .icon-circle-green { 
+            width: 32px; 
+            height: 32px; 
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0;
+            color: white;
+        }
+        .icon-small { 
+            width: 20px; 
+            height: 20px; 
+            background: #22c55e; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0;
+            color: white;
+        }
+        .icon-number { 
+            width: 16px; 
+            height: 16px; 
+            background: #22c55e; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .icon-feature {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #991b1b;
+        }
+        .text-red { color: #991b1b; font-size: 14px; font-weight: 500; }
+        .text-green { color: #166534; font-size: 14px; font-weight: 500; }
+        .text-bold { color: #1e293b; font-weight: 600; }
+        .text-center { text-align: center; }
+        .text-small { font-size: 14px; font-weight: 500; }
+        .text-xs { font-size: 13px; font-weight: 500; }
+        .text-uppercase { 
+            font-size: 12px; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em;
+        }
+        .text-italic { font-style: italic; }
+        .text-center-small { 
+            color: #475569; 
+            line-height: 1.7; 
+            margin-top: 24px; 
+            font-size: 14px; 
+            font-weight: 500; 
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            .email-content { padding: 30px 20px; }
+            .email-header { padding: 30px 20px; }
+            h1 { font-size: 28px; }
+            h2 { font-size: 20px; }
+            .button { padding: 14px 24px; font-size: 14px; min-width: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview">
+        <h1 style="text-align: center; color: #1e293b; margin-bottom: 30px;">YourNextLease Red/White Email Templates with Better Icons</h1>
+        
+        <!-- Message Notification Email -->
+        <div class="email-preview">
+            <div class="email-header">
+                <div class="header-pattern"></div>
+                <div style="position: relative; z-index: 1;">
+                    <h1>YourNextLease</h1>
+                    <p style="margin: 0; opacity: 0.95; font-size: 16px; font-weight: 500; letter-spacing: 0.025em;">You have a new message!</p>
+                </div>
+            </div>
+            <div class="email-content">
+                <h2>New message from Sarah</h2>
+                <p>Hi <span class="text-bold">John</span>,</p>
+                <p>You've received a new message from <span class="text-bold">Sarah</span> on YourNextLease.</p>
+                
+                <div class="info-box">
+                    <div class="flex-center">
+                        <div class="dot"></div>
+                        <p style="margin: 0; color: #475569; font-size: 14px; font-weight: 500;">
+                            <span class="text-bold">Listing:</span> Cozy 2BR Apartment near Campus
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="message-preview">
+                    <div class="flex-start">
+                        <div class="dot-small"></div>
+                        <div>
+                            <p style="margin: 0 0 8px 0; color: #991b1b; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                                Message Preview
+                            </p>
+                            <p style="margin: 0; color: #991b1b; font-style: italic; font-size: 14px; line-height: 1.6; font-weight: 400;">
+                                "Hi! I'm interested in your apartment. Is it still available? I'm looking for a place starting next month..."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <div class="flex-center">
+                        <div class="icon-small">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                        </div>
+                        <p style="margin: 0; color: #166534; font-size: 14px; font-weight: 500;">
+                            Click the button above to view the full message and respond.
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin: 40px 0 20px 0;">
+                    <a href="#" class="button">View Message</a>
+                </div>
+            </div>
+            <div class="email-footer">
+                <div style="color: #64748b; font-size: 14px; line-height: 1.6;">
+                    <p style="margin: 0 0 8px 0; font-weight: 500; color: #475569;">
+                        Best regards,<br />
+                        <span style="font-weight: 600; color: #1e293b;">The YourNextLease Team</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Welcome Email -->
+        <div class="email-preview">
+            <div class="email-header">
+                <div class="header-pattern"></div>
+                <div style="position: relative; z-index: 1;">
+                    <h1>YourNextLease</h1>
+                    <p style="margin: 0; opacity: 0.95; font-size: 16px; font-weight: 500; letter-spacing: 0.025em;">Your Next Lease, Made Easy.</p>
+                </div>
+            </div>
+            <div class="email-content">
+                <h2>Welcome to YourNextLease!</h2>
+                <p>Hi <span class="text-bold">Alex</span>,</p>
+                <p>Welcome to YourNextLease! We're excited to help you find the perfect student housing or connect with other students looking for roommates.</p>
+                
+                <div class="feature-list">
+                    <div class="flex-center" style="margin-bottom: 20px;">
+                        <div class="icon-circle">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                            </svg>
+                        </div>
+                        <h3>What you can do on YourNextLease:</h3>
+                    </div>
+                    
+                    <div class="grid">
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="icon-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                                </svg>
+                            </div>
+                            <span class="text-red">Browse student housing listings</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="icon-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                                </svg>
+                            </div>
+                            <span class="text-red">List your own space for sublet</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="icon-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                </svg>
+                            </div>
+                            <span class="text-red">Connect with potential roommates</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="icon-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                </svg>
+                            </div>
+                            <span class="text-red">Message hosts and tenants directly</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="icon-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </div>
+                            <span class="text-red">Save your favorite listings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-start">
+                    <div class="flex-center" style="margin-bottom: 16px;">
+                        <div class="icon-circle-green">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M13.13 22.19l-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27l-2.77 6.1zM5.64 12.5l-3.83-1.63 6.1-2.77c-.91 1.36-1.69 2.83-2.27 4.4zM12.5 5.64l1.63-3.83-2.77 6.1c1.36.91 2.83 1.69 4.4 2.27l-3.26-4.54zM22.19 13.13l-3.83-1.63c.58 1.57 1.36 3.04 2.27 4.4l6.1-2.77z"/>
+                            </svg>
+                        </div>
+                        <h4>Quick Start Guide</h4>
+                    </div>
+                    
+                    <div class="grid-small">
+                        <div class="flex-center">
+                            <div class="icon-number">1</div>
+                            <span class="text-green">Complete your profile with your preferences</span>
+                        </div>
+                        <div class="flex-center">
+                            <div class="icon-number">2</div>
+                            <span class="text-green">Browse listings in your preferred area</span>
+                        </div>
+                        <div class="flex-center">
+                            <div class="icon-number">3</div>
+                            <span class="text-green">Save interesting properties to your favorites</span>
+                        </div>
+                        <div class="flex-center">
+                            <div class="icon-number">4</div>
+                            <span class="text-green">Message hosts to schedule viewings</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-center-small">Ready to get started? Click the button above to explore listings or create your first post!</p>
+                
+                <div style="text-align: center; margin: 40px 0 20px 0;">
+                    <a href="#" class="button">Get Started</a>
+                </div>
+            </div>
+            <div class="email-footer">
+                <div style="color: #64748b; font-size: 14px; line-height: 1.6;">
+                    <p style="margin: 0 0 8px 0; font-weight: 500; color: #475569;">
+                        Best regards,<br />
+                        <span style="font-weight: 600; color: #1e293b;">The YourNextLease Team</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Listing Interest Email -->
+        <div class="email-preview">
+            <div class="email-header">
+                <div class="header-pattern"></div>
+                <div style="position: relative; z-index: 1;">
+                    <h1>YourNextLease</h1>
+                    <p style="margin: 0; opacity: 0.95; font-size: 16px; font-weight: 500; letter-spacing: 0.025em;">You have a new inquiry</p>
+                </div>
+            </div>
+            <div class="email-content">
+                <h2>Someone is interested in your listing!</h2>
+                <p>Hi <span class="text-bold">Mike</span>,</p>
+                <p>Great news! <span class="text-bold">Emma</span> is interested in your listing and would like to connect with you.</p>
+                
+                <div class="info-box">
+                    <div class="flex-center">
+                        <div class="dot"></div>
+                        <p style="margin: 0; color: #475569; font-size: 14px; font-weight: 500;">
+                            <span class="text-bold">Listing:</span> Modern Studio near University
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="next-steps">
+                    <div class="flex-center" style="margin-bottom: 20px;">
+                        <div class="icon-circle">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                            </svg>
+                        </div>
+                        <h3>Next Steps:</h3>
+                    </div>
+                    
+                    <div class="grid">
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="icon-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+                                </svg>
+                            </div>
+                            <span class="text-red">Check your dashboard for the message</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="icon-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                </svg>
+                            </div>
+                            <span class="text-red">Respond to their inquiry promptly</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="icon-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                                </svg>
+                            </div>
+                            <span class="text-red">Schedule a viewing if interested</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="icon-feature">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </div>
+                            <span class="text-red">Keep communication professional and clear</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <div class="flex-center">
+                        <div class="icon-small">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-1.24l-.85-.6A4.997 4.997 0 0 1 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/>
+                            </svg>
+                        </div>
+                        <p style="margin: 0; color: #166534; font-size: 14px; font-weight: 500;">
+                            <strong>Pro Tip:</strong> Quick responses increase your chances of successful matches!
+                        </p>
+                    </div>
+                </div>
+                
+                <p class="text-center-small">Click the button above to view the full inquiry and start a conversation!</p>
+                
+                <div style="text-align: center; margin: 40px 0 20px 0;">
+                    <a href="#" class="button">View Inquiry</a>
+                </div>
+            </div>
+            <div class="email-footer">
+                <div style="color: #64748b; font-size: 14px; line-height: 1.6;">
+                    <p style="margin: 0 0 8px 0; font-weight: 500; color: #475569;">
+                        Best regards,<br />
+                        <span style="font-weight: 600; color: #1e293b;">The YourNextLease Team</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YourNextLease Welcome Email - Clean Design</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: #f8fafc; 
+            min-height: 100vh;
+        }
+        .preview { max-width: 800px; margin: 0 auto; }
+        .email-preview { 
+            background: #ffffff; 
+            margin: 20px 0; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+        }
+        .email-header { 
+            background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%); 
+            color: white; 
+            padding: 40px 30px; 
+            text-align: center; 
+            position: relative;
+            overflow: hidden;
+        }
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(225, 29, 72, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(244, 63, 94, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .email-content { padding: 40px 30px; }
+        .email-footer { 
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); 
+            padding: 30px; 
+            text-align: center; 
+            color: #64748b; 
+            font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .button { 
+            background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%); 
+            color: white; 
+            padding: 16px 32px; 
+            text-decoration: none; 
+            border-radius: 16px; 
+            font-weight: 600; 
+            display: inline-block; 
+            font-size: 16px; 
+            box-shadow: 0 4px 14px 0 rgba(225, 29, 72, 0.4);
+            letter-spacing: 0.025em;
+            min-width: 200px;
+            transition: all 0.2s ease;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px 0 rgba(225, 29, 72, 0.5);
+        }
+        .feature-list { 
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); 
+            border: 1px solid #fecaca; 
+            padding: 24px; 
+            border-radius: 20px; 
+            margin: 24px 0; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .quick-start { 
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); 
+            border: 1px solid #bbf7d0; 
+            padding: 24px; 
+            border-radius: 20px; 
+            margin: 24px 0; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        h1 { 
+            margin: 0 0 8px 0; 
+            font-size: 32px; 
+            font-weight: 800; 
+            letter-spacing: -0.025em; 
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h2 { 
+            color: #1e293b; 
+            margin-bottom: 24px; 
+            font-size: 24px; 
+            font-weight: 700; 
+            letter-spacing: -0.025em; 
+            line-height: 1.3;
+        }
+        h3 { 
+            color: #991b1b; 
+            margin: 0 0 20px 0; 
+            font-size: 18px; 
+            font-weight: 700; 
+            letter-spacing: -0.025em;
+        }
+        h4 { 
+            color: #166534; 
+            margin: 0 0 16px 0; 
+            font-size: 16px; 
+            font-weight: 700; 
+            letter-spacing: '-0.025em';
+        }
+        p { 
+            color: #475569; 
+            line-height: 1.7; 
+            margin-bottom: 24px; 
+            font-size: 16px; 
+            font-weight: 400;
+        }
+        .flex-center { display: flex; align-items: center; gap: 12px; }
+        .grid { display: grid; gap: 12px; }
+        .grid-small { display: grid; gap: 8px; }
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: #e11d48;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .icon-number { 
+            width: 16px; 
+            height: 16px; 
+            background: #22c55e; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-shrink: 0;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        .text-red { color: #991b1b; font-size: 14px; font-weight: 500; line-height: 1.4; }
+        .text-green { color: #166534; font-size: 13px; font-weight: 500; line-height: 1.4; }
+        .text-bold { color: #1e293b; font-weight: 600; }
+        .text-center-small { 
+            color: #475569; 
+            line-height: 1.7; 
+            margin-top: 24px; 
+            font-size: 14px; 
+            font-weight: 500; 
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            .email-content { padding: 30px 20px; }
+            .email-header { padding: 30px 20px; }
+            h1 { font-size: 28px; }
+            h2 { font-size: 20px; }
+            .button { padding: 14px 24px; font-size: 14px; min-width: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview">
+        <h1 style="text-align: center; color: #1e293b; margin-bottom: 30px;">YourNextLease Welcome Email - Clean Design (No Icons)</h1>
+        
+        <!-- Welcome Email -->
+        <div class="email-preview">
+            <div class="email-header">
+                <div class="header-pattern"></div>
+                <div style="position: relative; z-index: 1;">
+                    <h1>YourNextLease</h1>
+                    <p style="margin: 0; opacity: 0.95; font-size: 16px; font-weight: 500; letter-spacing: 0.025em;">Your Next Lease, Made Easy.</p>
+                </div>
+            </div>
+            <div class="email-content">
+                <h2>Welcome to YourNextLease!</h2>
+                <p>Hi <span class="text-bold">Alex</span>,</p>
+                <p>Welcome to YourNextLease! We're excited to help you find the perfect student housing or connect with other students looking for roommates.</p>
+                
+                <div class="feature-list">
+                    <h3>What you can do on YourNextLease:</h3>
+                    
+                    <div class="grid">
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="dot"></div>
+                            <span class="text-red">Browse student housing listings</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="dot"></div>
+                            <span class="text-red">List your own space for sublet</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="dot"></div>
+                            <span class="text-red">Connect with potential roommates</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="dot"></div>
+                            <span class="text-red">Message hosts and tenants directly</span>
+                        </div>
+                        <div class="flex-center" style="padding: 8px 0;">
+                            <div class="dot"></div>
+                            <span class="text-red">Save your favorite listings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-start">
+                    <h4>Quick Start Guide</h4>
+                    
+                    <div class="grid-small">
+                        <div class="flex-center">
+                            <div class="icon-number">1</div>
+                            <span class="text-green">Complete your profile with your preferences</span>
+                        </div>
+                        <div class="flex-center">
+                            <div class="icon-number">2</div>
+                            <span class="text-green">Browse listings in your preferred area</span>
+                        </div>
+                        <div class="flex-center">
+                            <div class="icon-number">3</div>
+                            <span class="text-green">Save interesting properties to your favorites</span>
+                        </div>
+                        <div class="flex-center">
+                            <div class="icon-number">4</div>
+                            <span class="text-green">Message hosts to schedule viewings</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-center-small">Ready to get started? Click the button above to explore listings or create your first post!</p>
+                
+                <div style="text-align: center; margin: 40px 0 20px 0;">
+                    <a href="#" class="button">Get Started</a>
+                </div>
+            </div>
+            <div class="email-footer">
+                <div style="color: #64748b; font-size: 14px; line-height: 1.6;">
+                    <p style="margin: 0 0 8px 0; font-weight: 500; color: #475569;">
+                        Best regards,<br />
+                        <span style="font-weight: 600; color: #1e293b;">The YourNextLease Team</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
