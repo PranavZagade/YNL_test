@@ -68,6 +68,7 @@ export interface UserProfile {
   photoURL?: string;
   emailNotifications: boolean;
   verifiedUniversity?: VerifiedUniversity | null;
+  status?: string;
   createdAt: Date;
   updatedAt: Date;
 }
