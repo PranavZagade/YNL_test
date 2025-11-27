@@ -1,5 +1,5 @@
 import React from 'react';
-import { BaseEmailTemplate, Icons } from './base-template';
+import { BaseEmailTemplate } from './base-template';
 
 interface WelcomeEmailProps {
   userName: string;
@@ -38,7 +38,7 @@ export function WelcomeEmail({
           fontSize: '16px',
           fontWeight: '400'
         }}>
-          Welcome to YourNextLease! We're excited to help you find the perfect student housing or connect with other students looking for roommates.
+          Welcome to YourNextLease! We&#39;re excited to help you find the perfect student housing or connect with other students looking for roommates.
         </p>
 
         {/* Features Section */}

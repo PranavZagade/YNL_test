@@ -208,7 +208,7 @@ export function BaseEmailTemplate({
           {footerText}
         </p>
         <p style={{ margin: '0' }}>
-          If you don't want to receive these notifications, you can update your preferences in your dashboard.
+          If you don&#39;t want to receive these notifications, you can update your preferences in your dashboard.
         </p>
       </div>
     </div>

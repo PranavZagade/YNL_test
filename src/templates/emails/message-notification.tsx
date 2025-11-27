@@ -43,7 +43,7 @@ export function MessageNotificationEmail({
           fontSize: '16px',
           fontWeight: '400'
         }}>
-          You've received a new message from <strong style={{ color: '#1e293b', fontWeight: '600' }}>{senderName}</strong> on YourNextLease.
+          You&#39;ve received a new message from <strong style={{ color: '#1e293b', fontWeight: '600' }}>{senderName}</strong> on YourNextLease.
         </p>
 
         {/* Listing Context */}
@@ -96,7 +96,7 @@ export function MessageNotificationEmail({
               lineHeight: '1.6',
               fontWeight: '400'
             }}>
-              "{messagePreview.length > 120 ? messagePreview.substring(0, 120) + '...' : messagePreview}"
+              &quot;{messagePreview.length > 120 ? messagePreview.substring(0, 120) + '...' : messagePreview}&quot;
             </p>
           </div>
         )}

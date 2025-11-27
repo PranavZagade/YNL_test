@@ -13,7 +13,7 @@ export function ListingInterestEmail({
   hostName,
   interestedUserName,
   listingTitle,
-  listingUrl,
+  // listingUrl - reserved for future use
   dashboardUrl
 }: ListingInterestProps) {
   return (
