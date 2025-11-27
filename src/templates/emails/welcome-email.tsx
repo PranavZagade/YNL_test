@@ -168,6 +168,65 @@ export function WelcomeEmail({
           </div>
         </div>
 
+        {/* WhatsApp Community Section */}
+        <div style={{
+          background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
+          border: '2px solid #25D366',
+          borderRadius: '20px',
+          padding: '24px',
+          margin: '24px 0',
+          textAlign: 'center',
+          boxShadow: '0 4px 6px -1px rgba(37, 211, 102, 0.2), 0 2px 4px -1px rgba(37, 211, 102, 0.1)'
+        }}>
+          <div style={{
+            width: '60px',
+            height: '60px',
+            backgroundColor: '#25D366',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 16px auto',
+            fontSize: '28px'
+          }}>
+            <span style={{ color: 'white', fontSize: '28px' }}>💬</span>
+          </div>
+          <h3 style={{
+            color: '#166534',
+            margin: '0 0 12px 0',
+            fontSize: '18px',
+            fontWeight: '700',
+            letterSpacing: '-0.025em'
+          }}>
+            Join Our WhatsApp Community
+          </h3>
+          <p style={{
+            color: '#15803d',
+            fontSize: '14px',
+            fontWeight: '500',
+            lineHeight: '1.6',
+            margin: '0 0 16px 0'
+          }}>
+            Connect with ASU students looking for housing. Get instant updates, roommate tips, and housing advice!
+          </p>
+          <a 
+            href="https://chat.whatsapp.com/F6AIVNsVXlT7Ana3ZLcXJO"
+            style={{
+              display: 'inline-block',
+              backgroundColor: '#25D366',
+              color: 'white',
+              padding: '12px 24px',
+              textDecoration: 'none',
+              borderRadius: '12px',
+              fontWeight: '600',
+              fontSize: '14px',
+              boxShadow: '0 4px 14px 0 rgba(37, 211, 102, 0.4)'
+            }}
+          >
+            Join WhatsApp Group →
+          </a>
+        </div>
+
         <p style={{
           color: '#475569',
           lineHeight: '1.7',

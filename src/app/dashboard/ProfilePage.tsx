@@ -9,10 +9,11 @@ import { getUserProfile, updateEmailNotificationPreference } from '@/lib/user-ma
 import { db, auth } from '@/lib/firebase';
 import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
+import VerifiedBadge from '@/components/VerifiedBadge';
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user, signOut } = useAuth();
+  const { user, userProfile, signOut } = useAuth();
   const [avatarUrl, setAvatarUrl] = useState(user?.photoURL || '');
   const [displayName, setDisplayName] = useState(user?.displayName || '');
   const [status, setStatus] = useState('Available');
@@ -518,13 +519,29 @@ export default function ProfilePage() {
           {/* Profile Info Section */}
           <div className="flex-1 flex flex-col gap-4 w-full text-center lg:text-left">
             <div className="space-y-2">
-              <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent flex items-center justify-center lg:justify-start gap-2">
                 {displayName || 'User'}
+                <VerifiedBadge university={userProfile?.verifiedUniversity} size="lg" />
               </h1>
               <p className="text-gray-600 text-lg break-all">{user?.email}</p>
             </div>
             
             <div className="flex flex-wrap justify-center lg:justify-start gap-4">
+              {/* University Verified Badge */}
+              {userProfile?.verifiedUniversity?.isVerified && (
+                <div 
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border"
+                  style={{ 
+                    backgroundColor: `${userProfile.verifiedUniversity.color}15`,
+                    borderColor: `${userProfile.verifiedUniversity.color}40`,
+                    color: '#1f2937'
+                  }}
+                >
+                  <VerifiedBadge university={userProfile.verifiedUniversity} size="sm" showTooltip={false} />
+                  <span>{userProfile.verifiedUniversity.name}</span>
+                </div>
+              )}
+              
               {/* Status Badge */}
               <div className="flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-xl text-sm font-medium border border-blue-200">
                 <div className="w-2 h-2 bg-blue-500 rounded-full"></div>

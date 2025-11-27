@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Home, Bookmark, MessageCircle, User, Menu, PlusCircle, X, Pencil, Trash2, Smile, Bell, House } from "lucide-react";
+import { Home, Bookmark, MessageCircle, User, Menu, PlusCircle, X, Pencil, Trash2, Smile, Bell, House, Users } from "lucide-react";
 import EmojiPicker from 'emoji-picker-react';
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -29,6 +29,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import VerifiedBadge, { VerifiedBadgeInline } from '@/components/VerifiedBadge';
 
 const navItems = [
   { label: "Add Listing", icon: PlusCircle },
@@ -54,7 +55,7 @@ const amenityOptions = [
 ];
 
 function AddListingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { user } = useAuth();
+  const { user, userProfile } = useAuth();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     // Step 1
@@ -327,6 +328,7 @@ function AddListingModal({ open, onClose }: { open: boolean; onClose: () => void
         createdAt: Timestamp.now(),
         userId: user?.uid,
         userDisplayName: user?.displayName,
+        ownerVerifiedUniversity: userProfile?.verifiedUniversity || null,
       };
       const docRef = await addDoc(collection(db, 'listings'), data);
       setSubmitSuccess(true);
@@ -1748,6 +1750,8 @@ export default function DashboardPage() {
             let otherParticipantName = 'Unknown';
             let otherParticipantAvatar = 'https://placehold.co/100x100/red/white?text=U';
             
+            let otherParticipantVerifiedUniversity = null;
+            
             if (otherParticipantId) {
               // First, try to get the other participant's profile from users collection
               const otherParticipantProfile = await getUserProfile(otherParticipantId);
@@ -1756,6 +1760,7 @@ export default function DashboardPage() {
                 // Use the profile data
                 otherParticipantName = otherParticipantProfile.displayName;
                 otherParticipantAvatar = `https://placehold.co/100x100/red/white?text=${otherParticipantName[0]}`;
+                otherParticipantVerifiedUniversity = otherParticipantProfile.verifiedUniversity || null;
               } else {
                 // Fallback: try to get info from messages
                 try {
@@ -1792,6 +1797,7 @@ export default function DashboardPage() {
               id: docSnapshot.id,
               name: otherParticipantName,
               avatar: otherParticipantAvatar,
+              verifiedUniversity: otherParticipantVerifiedUniversity,
               lastMessage: data.lastMessage || '',
               lastMessageTime: data.lastMessageTime,
               unread: 0 // TODO: Implement unread count
@@ -2039,6 +2045,17 @@ export default function DashboardPage() {
             </Button>
           </div>
         ))}
+        {/* Community link - separate div for consistent spacing */}
+        <div>
+          <Button
+            variant="ghost"
+            className="justify-start gap-3 px-4 py-3 rounded-lg font-medium text-base transition-all w-full text-left text-gray-700 hover:bg-gray-100"
+            onClick={() => window.open('https://chat.whatsapp.com/F6AIVNsVXlT7Ana3ZLcXJO', '_blank')}
+          >
+            <Users className="w-5 h-5" />
+            Join Community
+          </Button>
+        </div>
       </aside>
       {/* Mobile sidebar toggle */}
       <div className="md:hidden fixed top-4 left-4 z-30">
@@ -2077,16 +2094,28 @@ export default function DashboardPage() {
             >
               <div className="text-2xl font-extrabold text-red-600 mb-8 tracking-tight select-none">Dashboard</div>
               {navItems.map((item, i) => (
-                <Button
-                  key={item.label}
-                  variant="ghost"
-                  className={`justify-start gap-3 px-4 py-3 rounded-lg font-medium text-base transition-all ${active === i ? "bg-red-50 text-red-600" : "text-gray-700 hover:bg-gray-100"}`}
-                  onClick={() => handleNavClick(i)}
-                >
-                  <item.icon className="w-5 h-5" />
-                  {item.label}
-                </Button>
+                <div key={item.label}>
+                  <Button
+                    variant="ghost"
+                    className={`justify-start gap-3 px-4 py-3 rounded-lg font-medium text-base transition-all w-full ${active === i ? "bg-red-50 text-red-600" : "text-gray-700 hover:bg-gray-100"}`}
+                    onClick={() => handleNavClick(i)}
+                  >
+                    <item.icon className="w-5 h-5" />
+                    {item.label}
+                  </Button>
+                </div>
               ))}
+              {/* Community link - separate div for consistent spacing */}
+              <div>
+                <Button
+                  variant="ghost"
+                  className="justify-start gap-3 px-4 py-3 rounded-lg font-medium text-base transition-all w-full text-gray-700 hover:bg-gray-100"
+                  onClick={() => window.open('https://chat.whatsapp.com/F6AIVNsVXlT7Ana3ZLcXJO', '_blank')}
+                >
+                  <Users className="w-5 h-5" />
+                  Join Community
+                </Button>
+              </div>
             </motion.aside>
           </>
         )}
@@ -2140,7 +2169,10 @@ export default function DashboardPage() {
                       ))}
                     </Swiper>
                   )}
-                  <div className="font-semibold text-lg text-red-600">{listing.title}</div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-lg text-red-600">{listing.title}</span>
+                    <VerifiedBadgeInline university={listing.ownerVerifiedUniversity} size="sm" />
+                  </div>
                   <div className="text-gray-700">{listing.propertyName || listing['propertyName'] || listing['Property Name']}</div>
                   {listing.depositAmount && (
                     <div className="text-sm text-gray-600">Deposit: ${listing.depositAmount}</div>
@@ -2223,7 +2255,10 @@ export default function DashboardPage() {
                           ))}
                         </Swiper>
                       )}
-                      <div className="font-semibold text-lg text-red-600">{listing.title}</div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-lg text-red-600">{listing.title}</span>
+                        <VerifiedBadgeInline university={listing.ownerVerifiedUniversity} size="sm" />
+                      </div>
                       <div className="text-gray-700">{listing.propertyName || listing['propertyName'] || listing['Property Name']}</div>
                       {listing.depositAmount && (
                         <div className="text-sm text-gray-600">Deposit: ${listing.depositAmount}</div>
@@ -2294,13 +2329,22 @@ export default function DashboardPage() {
                     >
                       <div className="relative">
                         <img src={conv.avatar} alt={conv.name} className="w-10 h-10 rounded-full object-cover border" />
+                        {/* Verified badge on avatar */}
+                        {conv.verifiedUniversity?.isVerified && (
+                          <div className="absolute -bottom-0.5 -right-0.5">
+                            <VerifiedBadge university={conv.verifiedUniversity} size="xs" showTooltip={false} />
+                          </div>
+                        )}
                         {/* Online indicator */}
-                        {onlineUsers.has(conv.id.split('_').find((id: string) => id !== user?.uid) || '') && (
+                        {!conv.verifiedUniversity?.isVerified && onlineUsers.has(conv.id.split('_').find((id: string) => id !== user?.uid) || '') && (
                           <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium text-gray-900 truncate">{conv.name}</div>
+                        <div className="font-medium text-gray-900 truncate flex items-center gap-1">
+                          {conv.name}
+                          <VerifiedBadgeInline university={conv.verifiedUniversity} size="xs" />
+                        </div>
                         <div className="text-xs text-gray-500 truncate">{conv.lastMessage || 'No messages yet'}</div>
                       </div>
                       {conv.unread > 0 && <span className="ml-2 bg-red-600 text-white text-xs rounded-full px-2 py-0.5 font-bold">{conv.unread}</span>}
@@ -2338,13 +2382,22 @@ export default function DashboardPage() {
                       >
                       <div className="relative">
                         <img src={conv.avatar} alt={conv.name} className="w-10 h-10 rounded-full object-cover border" />
+                        {/* Verified badge on avatar */}
+                        {conv.verifiedUniversity?.isVerified && (
+                          <div className="absolute -bottom-0.5 -right-0.5">
+                            <VerifiedBadge university={conv.verifiedUniversity} size="xs" showTooltip={false} />
+                          </div>
+                        )}
                         {/* Online indicator */}
-                        {onlineUsers.has(conv.id.split('_').find((id: string) => id !== user?.uid) || '') && (
+                        {!conv.verifiedUniversity?.isVerified && onlineUsers.has(conv.id.split('_').find((id: string) => id !== user?.uid) || '') && (
                           <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium text-gray-900 truncate">{conv.name}</div>
+                        <div className="font-medium text-gray-900 truncate flex items-center gap-1">
+                          {conv.name}
+                          <VerifiedBadgeInline university={conv.verifiedUniversity} size="xs" />
+                        </div>
                         <div className="text-xs text-gray-500 truncate">{conv.lastMessage || 'No messages yet'}</div>
                       </div>
                       {conv.unread > 0 && <span className="ml-2 bg-red-600 text-white text-xs rounded-full px-2 py-0.5 font-bold">{conv.unread}</span>}
@@ -2364,13 +2417,29 @@ export default function DashboardPage() {
                 {/* Header */}
                 <div className="flex flex-col items-center justify-center gap-2 px-4 sm:px-6 py-4 border-b border-gray-200 bg-white relative">
                   {/* Back button for mobile, under burger button, not in header */}
-                  <img 
-                    src={otherParticipant?.avatar || hostInfo?.avatar || conversations.find(c => c.id === selectedConversation)?.avatar} 
-                    alt={otherParticipant?.name || hostInfo?.name || conversations.find(c => c.id === selectedConversation)?.name} 
-                    className="w-14 h-14 rounded-full object-cover border mx-auto" 
-                  />
-                  <div className="font-semibold text-gray-900 text-lg text-center">
+                  <div className="relative">
+                    <img 
+                      src={otherParticipant?.avatar || hostInfo?.avatar || conversations.find(c => c.id === selectedConversation)?.avatar} 
+                      alt={otherParticipant?.name || hostInfo?.name || conversations.find(c => c.id === selectedConversation)?.name} 
+                      className="w-14 h-14 rounded-full object-cover border mx-auto" 
+                    />
+                    {/* Verified badge on avatar */}
+                    {(conversations.find(c => c.id === selectedConversation)?.verifiedUniversity?.isVerified) && (
+                      <div className="absolute -bottom-0.5 -right-0.5">
+                        <VerifiedBadge 
+                          university={conversations.find(c => c.id === selectedConversation)?.verifiedUniversity} 
+                          size="sm" 
+                          showTooltip={false} 
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div className="font-semibold text-gray-900 text-lg text-center flex items-center gap-2">
                     {otherParticipant?.name || hostInfo?.name || conversations.find(c => c.id === selectedConversation)?.name || (loadingMessages ? 'Loading...' : 'Chat')}
+                    <VerifiedBadge 
+                      university={conversations.find(c => c.id === selectedConversation)?.verifiedUniversity} 
+                      size="md" 
+                    />
                   </div>
                 </div>
                 {/* Messages */}

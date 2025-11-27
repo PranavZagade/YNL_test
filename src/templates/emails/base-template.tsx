@@ -162,13 +162,36 @@ export function BaseEmailTemplate({
             lineHeight: '1.6'
           }}>
             <p style={{
-              margin: '0 0 8px 0',
+              margin: '0 0 16px 0',
               fontWeight: '500',
               color: '#475569'
             }}>
               Best regards,<br />
               <span style={{ fontWeight: '600', color: '#1e293b' }}>The YourNextLease Team</span>
             </p>
+            
+            {/* WhatsApp Community Link */}
+            <div style={{
+              borderTop: '1px solid #cbd5e1',
+              paddingTop: '16px',
+              marginTop: '16px'
+            }}>
+              <a 
+                href="https://chat.whatsapp.com/F6AIVNsVXlT7Ana3ZLcXJO"
+                style={{
+                  display: 'inline-block',
+                  backgroundColor: '#25D366',
+                  color: 'white',
+                  padding: '10px 20px',
+                  textDecoration: 'none',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  borderRadius: '8px'
+                }}
+              >
+                💬 Join our WhatsApp Community
+              </a>
+            </div>
           </div>
         </div>
       </div>

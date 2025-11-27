@@ -20,11 +20,12 @@ import { Fragment } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Map, { Marker } from 'react-map-gl';
 import AuthModal from '@/components/AuthModal';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { VerifiedBadgeInline } from '@/components/VerifiedBadge';
 
 const mockListings = [
   {
@@ -224,14 +225,20 @@ function SearchResultsPage() {
       try {
         const listingsRef = collection(db, 'listings');
         
-        // Start with a simple query to get all listings
-        let q = query(listingsRef, orderBy('createdAt', 'desc'));
+        // Get all listings and sort in memory (avoids Firestore index requirement)
+        const querySnapshot = await getDocs(listingsRef);
         
-        const querySnapshot = await getDocs(q);
         let fetchedListings = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         })) as any[];
+        
+        // Sort by createdAt in memory (newest first)
+        fetchedListings.sort((a, b) => {
+          const aTime = a.createdAt?.seconds || 0;
+          const bTime = b.createdAt?.seconds || 0;
+          return bTime - aTime;
+        });
         
         // Parse filter params from URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -322,6 +329,7 @@ function SearchResultsPage() {
             return filterAmenities.every(a => listingAmenitiesArr.includes(a) || listing[a]);
           });
         }
+        
         setListings(filteredListings);
         setSearchSummary(generateSearchSummary());
       } catch (error) {
@@ -839,7 +847,10 @@ function SearchResultsPage() {
               >
                 <img src={listing.imageUrls?.[0] || 'https://placehold.co/400x300/FFB6C1/000?text=No+Image'} alt={listing.title} className="w-full h-48 object-cover rounded-t-2xl" />
                 <div className="p-5 flex-1 flex flex-col">
-                  <div className="font-semibold text-lg mb-1 text-gray-900">{listing.title}</div>
+                  <div className="font-semibold text-lg mb-1 text-gray-900 flex items-center gap-1.5">
+                    {listing.title}
+                    <VerifiedBadgeInline university={listing.ownerVerifiedUniversity} size="sm" />
+                  </div>
                   {listing.propertyName && (
                     <div className="text-sm text-gray-600 mb-1 font-medium">{listing.propertyName}</div>
                   )}
@@ -989,7 +1000,10 @@ function SearchResultsPage() {
                 >
                   <img src={listing.imageUrls?.[0] || 'https://placehold.co/400x300/FFB6C1/000?text=No+Image'} alt={listing.title} className="w-full h-40 object-cover rounded-t-2xl" />
                   <div className="p-3 flex-1 flex flex-col">
-                    <div className="font-semibold text-base mb-1 text-gray-900">{listing.title}</div>
+                    <div className="font-semibold text-base mb-1 text-gray-900 flex items-center gap-1.5">
+                      {listing.title}
+                      <VerifiedBadgeInline university={listing.ownerVerifiedUniversity} size="xs" />
+                    </div>
                     {listing.propertyName && (
                       <div className="text-sm text-gray-600 mb-1 font-medium">{listing.propertyName}</div>
                     )}
