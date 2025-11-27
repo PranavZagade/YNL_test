@@ -479,12 +479,12 @@ export default function Home() {
                 {/* Benefits */}
                 <ul className="relative space-y-4">
                   {[
-                    'Your listing stays discoverable 24/7',
-                    'Smart search with filters',
-                    'One-click posting, auto-share to groups',
-                    'Dashboard to track views & inquiries',
-                    'Real inquiries only, no spam',
-                    'ASU verified badges build trust',
+                    'Your listing stays visible for days, not minutes',
+                    'Buyers can actually find you with search, filters & categories',
+                    'Clean, professional listing pages that stand out',
+                    'Track saves and inquiries',
+                    'Only real leads — no spam or random group messages',
+                    'Higher credibility → more responses',
                   ].map((item, i) => (
                     <motion.li 
                       key={i}
