@@ -12,10 +12,12 @@ import { toast } from 'sonner';
 import { Loader2, Eye, EyeOff, Lock, CheckCircle, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
 
-export default function AccountSetupPage() {
+import { Suspense } from 'react';
+
+function AccountSetupContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const oobCode = searchParams.get('oobCode');
+    const oobCode = searchParams?.get('oobCode');
 
     const [email, setEmail] = useState<string | null>(null);
     const [password, setPassword] = useState('');
@@ -210,5 +212,17 @@ export default function AccountSetupPage() {
                 &copy; {new Date().getFullYear()} YourNextLease. All rights reserved.
             </p>
         </div>
+    );
+}
+
+export default function AccountSetupPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <Loader2 className="h-8 w-8 animate-spin text-red-600" />
+            </div>
+        }>
+            <AccountSetupContent />
+        </Suspense>
     );
 }
