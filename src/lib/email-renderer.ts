@@ -13,7 +13,7 @@ export function renderMessageNotificationEmail(props: {
   dashboardUrl: string;
 }): string {
   const { MessageNotificationEmail } = require('../templates/emails/message-notification');
-  
+
   const emailComponent = React.createElement(MessageNotificationEmail, props);
   return renderEmailTemplate(emailComponent);
 }
@@ -23,7 +23,7 @@ export function renderWelcomeEmail(props: {
   dashboardUrl: string;
 }): string {
   const { WelcomeEmail } = require('../templates/emails/welcome-email');
-  
+
   const emailComponent = React.createElement(WelcomeEmail, props);
   return renderEmailTemplate(emailComponent);
 }
@@ -36,7 +36,7 @@ export function renderListingInterestEmail(props: {
   dashboardUrl: string;
 }): string {
   const { ListingInterestEmail } = require('../templates/emails/listing-interest');
-  
+
   const emailComponent = React.createElement(ListingInterestEmail, props);
   return renderEmailTemplate(emailComponent);
 }
@@ -53,7 +53,16 @@ export function renderListingAlertEmail(props: {
   listingUrl: string;
 }): string {
   const { default: ListingAlertEmail } = require('../templates/emails/listing-alert');
-  
+
   const emailComponent = React.createElement(ListingAlertEmail, props);
+  return renderEmailTemplate(emailComponent);
+}
+
+export function renderAccountSetupEmail(props: {
+  userName: string;
+  setupUrl: string;
+}): string {
+  const { AccountSetupEmail } = require('../templates/emails/account-setup');
+  const emailComponent = React.createElement(AccountSetupEmail, props);
   return renderEmailTemplate(emailComponent);
 } 

@@ -20,7 +20,7 @@ const missingVars = Object.entries(requiredEnvVars)
 if (missingVars.length > 0) {
   console.error('❌ Missing required Firebase environment variables:', missingVars);
   console.error('Please check your .env.local file and ensure all Firebase variables are set.');
-  
+
   if (process.env.NODE_ENV === 'production') {
     throw new Error(`Missing required Firebase environment variables: ${missingVars.join(', ')}`);
   }
@@ -45,13 +45,13 @@ try {
   app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
   auth = getAuth(app);
   db = getFirestore(app);
-  
+
   if (process.env.NODE_ENV === 'development') {
     console.log('✅ Firebase initialized successfully');
   }
 } catch (error) {
   console.error('❌ Firebase initialization failed:', error);
-  
+
   if (process.env.NODE_ENV === 'production') {
     throw new Error('Firebase initialization failed. Please check your configuration.');
   }

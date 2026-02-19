@@ -26,7 +26,7 @@ cloudinary.config({
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Method validation
   if (req.method !== 'POST') {
-    return res.status(405).json({ 
+    return res.status(405).json({
       error: 'Method not allowed',
       allowedMethods: ['POST']
     });
@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Input validation
     if (!publicId) {
       console.error('❌ Missing publicId in request body');
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Missing required field: publicId',
         required: ['publicId']
       });
@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Validate publicId format (should be a string and not empty)
     if (typeof publicId !== 'string' || publicId.trim().length === 0) {
       console.error('❌ Invalid publicId format:', publicId);
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Invalid publicId format',
         received: publicId,
         expected: 'Non-empty string'
@@ -57,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Check if Cloudinary is properly configured
     if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
       console.error('❌ Cloudinary not properly configured');
-      return res.status(500).json({ 
+      return res.status(500).json({
         error: 'Image service not configured',
         details: 'Missing Cloudinary environment variables',
         missing: missingVars
@@ -74,16 +74,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         console.log(`🗑️ Deleting image (attempt ${attempt}/${maxRetries})...`);
-        
+
         deleteResult = await cloudinary.uploader.destroy(publicId);
-        
+
         console.log('✅ Image deleted successfully:', {
           publicId,
           result: deleteResult.result,
           attempt
         });
         break; // Success, exit retry loop
-        
+
       } catch (deleteError: any) {
         lastError = deleteError;
         console.error(`❌ Image deletion attempt ${attempt} failed:`, {
@@ -104,7 +104,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (!deleteResult) {
       console.error('❌ All image deletion attempts failed');
-      return res.status(500).json({ 
+      return res.status(500).json({
         error: 'Failed to delete image after multiple attempts',
         details: lastError?.message || 'Unknown error',
         publicId,
@@ -120,8 +120,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       timestamp: new Date().toISOString()
     });
 
-    return res.status(200).json({ 
-      success: true, 
+    return res.status(200).json({
+      success: true,
       data: deleteResult,
       metrics: {
         publicId,
@@ -138,7 +138,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       body: req.body
     });
 
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: 'Failed to delete image',
       details: error.message || 'Unknown error',
       timestamp: new Date().toISOString()

@@ -54,7 +54,7 @@ export default function AddListingForm() {
         availableTo: "",
         description: "",
       });
-    } catch (err) {
+    } catch {
       setError("Failed to add listing. Please try again.");
     } finally {
       setLoading(false);

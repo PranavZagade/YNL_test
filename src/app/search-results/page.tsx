@@ -160,14 +160,14 @@ function SearchResultsPage() {
   const [lookFor, setLookFor] = useState(searchParams?.get('lookFor') || '');
   const [fromDate, setFromDate] = useState(searchParams?.get('fromDate') ? new Date(searchParams.get('fromDate')!) : undefined);
   const [toDate, setToDate] = useState(searchParams?.get('toDate') ? new Date(searchParams.get('toDate')!) : undefined);
-  
+
   // Update fromDate and toDate when dateRange changes
   const handleDateRangeChange = (range: DateRange | undefined) => {
     setDateRange(range);
     setFromDate(range?.from);
     setToDate(range?.to);
   };
-  
+
   // Initialize dateRange from URL parameters
   useEffect(() => {
     if (fromDate && toDate) {
@@ -224,22 +224,22 @@ function SearchResultsPage() {
     const fetchListings = async () => {
       try {
         const listingsRef = collection(db, 'listings');
-        
+
         // Get all listings and sort in memory (avoids Firestore index requirement)
         const querySnapshot = await getDocs(listingsRef);
-        
+
         let fetchedListings = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         })) as any[];
-        
+
         // Sort by createdAt in memory (newest first)
         fetchedListings.sort((a, b) => {
           const aTime = a.createdAt?.seconds || 0;
           const bTime = b.createdAt?.seconds || 0;
           return bTime - aTime;
         });
-        
+
         // Parse filter params from URL
         const urlParams = new URLSearchParams(window.location.search);
         const minPrice = urlParams.get('minPrice') ? parseInt(urlParams.get('minPrice')!) : undefined;
@@ -250,18 +250,18 @@ function SearchResultsPage() {
         const filterToDateStr = urlParams.get('filterToDate');
         const filterFromDate = filterFromDateStr ? new Date(filterFromDateStr) : undefined;
         const filterToDate = filterToDateStr ? new Date(filterToDateStr) : undefined;
-        
+
         // Apply comprehensive filters in memory
         let filteredListings = fetchedListings;
-        
+
         // 1. Filter by City Name (case-insensitive)
         if (searchQuery && searchQuery.trim()) {
           const cityQuery = searchQuery.toLowerCase().trim();
-          filteredListings = filteredListings.filter(listing => 
+          filteredListings = filteredListings.filter(listing =>
             listing.city?.toLowerCase().includes(cityQuery)
           );
         }
-        
+
         // 2. Filter by Property Type (room type)
         if (lookFor && lookFor.trim()) {
           filteredListings = filteredListings.filter(listing => {
@@ -329,7 +329,7 @@ function SearchResultsPage() {
             return filterAmenities.every(a => listingAmenitiesArr.includes(a) || listing[a]);
           });
         }
-        
+
         setListings(filteredListings);
         setSearchSummary(generateSearchSummary());
       } catch (error) {
@@ -372,7 +372,7 @@ function SearchResultsPage() {
   }
 
   // Mapbox access token
-  const MAPBOX_TOKEN = 'pk.eyJ1IjoibGVhc2x5IiwiYSI6ImNtZGlhZ3Z3MDA2dzAybXByMmJzMGQ4dzUifQ.X6G6tMy9wgr_GgU58fU3mQ';
+  const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   // Center map on first property or fallback to Tempe, AZ
   const firstCoords = parseLatLngFromGoogleMapsLink(listings[0]?.mapsLink || '') || { lat: 33.4255, lng: -111.9400 };
 
@@ -381,7 +381,7 @@ function SearchResultsPage() {
       {/* Mobile header: pill summary bar and modal */}
       <header className="sticky top-0 z-30 bg-white border-b border-gray-100 flex flex-col sm:flex-row items-center px-3 sm:px-8 py-2 sm:py-4 gap-2 sm:gap-4 shadow-sm">
         {/* Brand name for desktop */}
-        <div 
+        <div
           className="hidden sm:flex items-center gap-2 font-extrabold text-red-600 text-2xl tracking-tight select-none mr-6 cursor-pointer hover:text-red-700 transition-colors"
           onClick={() => router.push('/')}
         >
@@ -389,7 +389,7 @@ function SearchResultsPage() {
         </div>
         {/* Mobile: pill summary bar */}
         <div className="flex w-full items-center justify-between sm:hidden">
-          <button className="p-2 rounded-full hover:bg-gray-100 transition" aria-label="Back" onClick={() => router.push('/') }>
+          <button className="p-2 rounded-full hover:bg-gray-100 transition" aria-label="Back" onClick={() => router.push('/')}>
             <ArrowLeft className="w-5 h-5" />
           </button>
           <button className="flex-1 mx-2" onClick={() => setSearchModalOpen(true)}>
@@ -411,7 +411,7 @@ function SearchResultsPage() {
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-red-600">
                   <MapPin className="h-4 w-4" />
                 </span>
-                <Input 
+                <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => {
@@ -422,19 +422,19 @@ function SearchResultsPage() {
                       if (lookFor && lookFor.trim()) searchParams.set('lookFor', lookFor.trim());
                       if (fromDate) searchParams.set('fromDate', fromDate.toISOString());
                       if (toDate) searchParams.set('toDate', toDate.toISOString());
-                      
+
                       // Update URL without page reload
                       const newUrl = `/search-results?${searchParams.toString()}`;
                       router.push(newUrl);
                     }
                   }}
-                  className="h-10 pl-10 pr-4 py-2 text-base font-normal rounded-lg border border-gray-200 bg-white text-gray-700 focus:bg-gray-50 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition-all w-full" 
-                  placeholder="City or University" 
+                  className="h-10 pl-10 pr-4 py-2 text-base font-normal rounded-lg border border-gray-200 bg-white text-gray-700 focus:bg-gray-50 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition-all w-full"
+                  placeholder="City or University"
                 />
               </div>
               {/* Dropdown for 'Look for' */}
               <div className="relative w-full md:w-36">
-                <select 
+                <select
                   value={lookFor}
                   onChange={(e) => setLookFor(e.target.value)}
                   className="w-full h-10 appearance-none px-4 py-2 text-base font-normal rounded-lg border border-gray-200 bg-white text-gray-700 focus:bg-gray-50 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition-all pr-10"
@@ -466,7 +466,7 @@ function SearchResultsPage() {
                 </Popover>
               </div>
               <div className="flex gap-4 w-full md:w-auto mt-2 md:mt-0 items-center">
-                <Button 
+                <Button
                   onClick={() => {
                     // Trigger search by updating URL parameters
                     const searchParams = new URLSearchParams();
@@ -474,7 +474,7 @@ function SearchResultsPage() {
                     if (lookFor && lookFor.trim()) searchParams.set('lookFor', lookFor.trim());
                     if (fromDate) searchParams.set('fromDate', fromDate.toISOString());
                     if (toDate) searchParams.set('toDate', toDate.toISOString());
-                    
+
                     // Update URL without page reload
                     const newUrl = `/search-results?${searchParams.toString()}`;
                     router.push(newUrl);
@@ -516,9 +516,9 @@ function SearchResultsPage() {
             <button className="bg-red-600 text-white px-4 py-2 rounded-full shadow hover:bg-red-700 transition font-semibold" onClick={() => setAuthOpen(true)}>Login</button>
           )}
         </div>
-        
 
-        
+
+
         {/* Mobile: search modal */}
         <HeadlessDialog open={searchModalOpen} onClose={() => setSearchModalOpen(false)} className="fixed z-50 inset-0 flex items-center justify-center">
           <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" onClick={() => setSearchModalOpen(false)} />
@@ -535,7 +535,7 @@ function SearchResultsPage() {
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-red-600">
                   <MapPin className="h-4 w-4" />
                 </span>
-                <Input 
+                <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => {
@@ -546,19 +546,19 @@ function SearchResultsPage() {
                       if (lookFor && lookFor.trim()) searchParams.set('lookFor', lookFor.trim());
                       if (fromDate) searchParams.set('fromDate', fromDate.toISOString());
                       if (toDate) searchParams.set('toDate', toDate.toISOString());
-                      
+
                       // Update URL and close modal
                       const newUrl = `/search-results?${searchParams.toString()}`;
                       router.push(newUrl);
                       setSearchModalOpen(false);
                     }
                   }}
-                  className="h-10 pl-10 pr-4 py-2 text-base font-normal rounded-lg border border-gray-200 bg-white text-gray-700 focus:bg-gray-50 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition-all w-full" 
-                  placeholder="City or University" 
+                  className="h-10 pl-10 pr-4 py-2 text-base font-normal rounded-lg border border-gray-200 bg-white text-gray-700 focus:bg-gray-50 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition-all w-full"
+                  placeholder="City or University"
                 />
               </div>
               <div className="relative w-full">
-                <select 
+                <select
                   value={lookFor}
                   onChange={(e) => setLookFor(e.target.value)}
                   className="w-full h-10 appearance-none px-4 py-2 text-base font-normal rounded-lg border border-gray-200 bg-white text-gray-700 focus:bg-gray-50 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition-all pr-10"
@@ -588,7 +588,7 @@ function SearchResultsPage() {
                   </PopoverContent>
                 </Popover>
               </div>
-              <Button 
+              <Button
                 onClick={() => {
                   // Trigger search by updating URL parameters
                   const searchParams = new URLSearchParams();
@@ -596,7 +596,7 @@ function SearchResultsPage() {
                   if (lookFor && lookFor.trim()) searchParams.set('lookFor', lookFor.trim());
                   if (fromDate) searchParams.set('fromDate', fromDate.toISOString());
                   if (toDate) searchParams.set('toDate', toDate.toISOString());
-                  
+
                   // Update URL and close modal
                   const newUrl = `/search-results?${searchParams.toString()}`;
                   router.push(newUrl);
@@ -676,7 +676,7 @@ function SearchResultsPage() {
                             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                           />
                         </div>
-                        
+
                         {/* Max Price */}
                         <div>
                           <div className="flex justify-between items-center mb-1">
@@ -821,7 +821,7 @@ function SearchResultsPage() {
           <span className="text-gray-400">• {listings.length} listings found</span>
         </div>
       </div>
-      
+
       {/* Main Content: 50/50 split */}
       {/* Desktop: split view, Mobile: map bg + bottom sheet */}
       <div className="hidden md:flex flex-row md:h-[calc(100vh-120px)] h-auto">
@@ -835,11 +835,10 @@ function SearchResultsPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08 }}
-                className={`bg-white rounded-2xl shadow-lg border p-0 flex flex-col transition-all duration-200 cursor-pointer hover:shadow-xl hover:scale-105 ${
-                  selectedListingId === listing.id 
-                    ? 'border-red-500 shadow-xl scale-105 ring-2 ring-red-200' 
-                    : 'border-gray-100'
-                }`}
+                className={`bg-white rounded-2xl shadow-lg border p-0 flex flex-col transition-all duration-200 cursor-pointer hover:shadow-xl hover:scale-105 ${selectedListingId === listing.id
+                  ? 'border-red-500 shadow-xl scale-105 ring-2 ring-red-200'
+                  : 'border-gray-100'
+                  }`}
                 onClick={() => {
                   handleListingCardClick(listing.id);
                   router.push(`/listing/${listing.id}`);
@@ -890,16 +889,15 @@ function SearchResultsPage() {
                 const coords = parseLatLngFromGoogleMapsLink(listing.mapsLink || '');
                 if (!coords) return null;
                 return (
-                  <Marker 
-                    key={listing.id} 
-                    longitude={coords.lng} 
-                    latitude={coords.lat} 
+                  <Marker
+                    key={listing.id}
+                    longitude={coords.lng}
+                    latitude={coords.lat}
                     anchor="bottom"
                     onClick={() => handleMarkerClick(listing.id)}
                   >
-                    <div className={`marker-label cursor-pointer transition-all duration-200 ${
-                      selectedListingId === listing.id ? 'bg-red-700 scale-110' : ''
-                    }`}>
+                    <div className={`marker-label cursor-pointer transition-all duration-200 ${selectedListingId === listing.id ? 'bg-red-700 scale-110' : ''
+                      }`}>
                       ${listing.rent}
                     </div>
                   </Marker>
@@ -948,16 +946,15 @@ function SearchResultsPage() {
               const coords = parseLatLngFromGoogleMapsLink(listing.mapsLink || '');
               if (!coords) return null;
               return (
-                <Marker 
-                  key={listing.id} 
-                  longitude={coords.lng} 
-                  latitude={coords.lat} 
+                <Marker
+                  key={listing.id}
+                  longitude={coords.lng}
+                  latitude={coords.lat}
                   anchor="bottom"
                   onClick={() => handleMarkerClick(listing.id)}
                 >
-                  <div className={`marker-label cursor-pointer transition-all duration-200 ${
-                    selectedListingId === listing.id ? 'bg-red-700 scale-110' : ''
-                  }`}>
+                  <div className={`marker-label cursor-pointer transition-all duration-200 ${selectedListingId === listing.id ? 'bg-red-700 scale-110' : ''
+                    }`}>
                     ${listing.rent}
                   </div>
                 </Marker>
@@ -988,11 +985,10 @@ function SearchResultsPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.08 }}
-                  className={`bg-white rounded-2xl shadow-lg border p-0 flex flex-col transition-all duration-200 cursor-pointer hover:shadow-xl hover:scale-105 ${
-                    selectedListingId === listing.id 
-                      ? 'border-red-500 shadow-xl scale-105 ring-2 ring-red-200' 
-                      : 'border-gray-100'
-                  }`}
+                  className={`bg-white rounded-2xl shadow-lg border p-0 flex flex-col transition-all duration-200 cursor-pointer hover:shadow-xl hover:scale-105 ${selectedListingId === listing.id
+                    ? 'border-red-500 shadow-xl scale-105 ring-2 ring-red-200'
+                    : 'border-gray-100'
+                    }`}
                   onClick={() => {
                     handleListingCardClick(listing.id);
                     router.push(`/listing/${listing.id}`);
@@ -1091,7 +1087,7 @@ function SearchResultsPage() {
       {/* Mobile Fixed Footer */}
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-white shadow-t-lg rounded-t-2xl flex justify-around items-center py-2 sm:hidden border-t border-gray-100">
         {user ? (
-          <button 
+          <button
             onClick={() => router.push('/dashboard')}
             className="flex flex-col items-center text-gray-700 hover:text-red-600 transition"
           >
@@ -1099,7 +1095,7 @@ function SearchResultsPage() {
             <span className="text-xs font-medium">Saved</span>
           </button>
         ) : (
-          <button 
+          <button
             onClick={() => setAuthOpen(true)}
             className="flex flex-col items-center text-gray-700 hover:text-red-600 transition"
           >
@@ -1132,7 +1128,7 @@ function SearchResultsPage() {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <button 
+          <button
             onClick={() => setAuthOpen(true)}
             className="flex flex-col items-center text-gray-700 hover:text-red-600 transition"
           >

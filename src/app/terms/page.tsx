@@ -14,10 +14,10 @@ export default function TermsPage() {
           </div>
           <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              Welcome to YourNextLease. By accessing or using our website (the "Platform"), you agree to be bound by the following Terms and Conditions (the "Terms"). If you do not agree with any part of these Terms, please do not use the Platform.
+              Welcome to YourNextLease. By accessing or using our website (the &quot;Platform&quot;), you agree to be bound by the following Terms and Conditions (the &quot;Terms&quot;). If you do not agree with any part of these Terms, please do not use the Platform.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              These Terms constitute a legal agreement between you ("User", "you", or "your") and YourNextLease ("Company", "we", "us", or "our").
+              These Terms constitute a legal agreement between you (&quot;User&quot;, &quot;you&quot;, or &quot;your&quot;) and YourNextLease (&quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;).
             </p>
           </div>
         </div>
@@ -259,7 +259,7 @@ export default function TermsPage() {
                 <span className="text-gray-700">Your violation of any rights of another person or entity.</span>
               </div>
             </div>
-        </section>
+          </section>
 
           {/* Section 10 */}
           <section className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
@@ -268,7 +268,7 @@ export default function TermsPage() {
               Modifications to the Platform
             </h2>
             <p className="text-gray-700">We may change, suspend, or discontinue any part of the Platform at any time, without notice or liability.</p>
-        </section>
+          </section>
 
           {/* Section 11 */}
           <section className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
@@ -277,7 +277,7 @@ export default function TermsPage() {
               Termination
             </h2>
             <p className="text-gray-700">We reserve the right to suspend or terminate your access to the Platform at any time, with or without notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties.</p>
-        </section>
+          </section>
 
           {/* Section 12 */}
           <section className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
@@ -286,7 +286,7 @@ export default function TermsPage() {
               Privacy
             </h2>
             <p className="text-gray-700">Your use of the Platform is also governed by our <a href="/privacy" className="text-red-600 hover:text-red-700 underline">Privacy Policy</a>, which outlines how we collect, use, and protect your personal data.</p>
-        </section>
+          </section>
 
           {/* Section 13 */}
           <section className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
@@ -295,7 +295,7 @@ export default function TermsPage() {
               Governing Law and Jurisdiction
             </h2>
             <p className="text-gray-700">These Terms are governed by the laws of the State of Arizona, United States, without regard to conflict of law principles. Any disputes shall be resolved in the courts located in Maricopa County, Arizona.</p>
-        </section>
+          </section>
 
           {/* Section 14 */}
           <section className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
@@ -304,7 +304,7 @@ export default function TermsPage() {
               Entire Agreement
             </h2>
             <p className="text-gray-700">These Terms constitute the entire agreement between you and YourNextLease concerning the use of the Platform and supersede all prior communications and proposals.</p>
-        </section>
+          </section>
 
           {/* Section 15 */}
           <section className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
@@ -315,13 +315,13 @@ export default function TermsPage() {
             <p className="text-gray-700 mb-6">For any questions regarding these Terms, please contact us at:</p>
             <div className="bg-gray-50 rounded-lg p-6">
               <h3 className="font-bold text-gray-800 mb-2">YourNextLease</h3>
-              <p className="text-gray-700">
-                Email: <a href="mailto:info@yournextlease.com" className="text-red-600 hover:text-red-700 underline">info@yournextlease.com</a>
+              <p className="text-gray-600">
+                For more information about our practices, if you have questions, or if you would like to make a complaint, please contact us by e-mail at <a href="mailto:support@yournextlease.com" className="text-blue-600 hover:text-blue-800">support@yournextlease.com</a> or using the &apos;Contact Us&apos; page.
               </p>
             </div>
-        </section>
+          </section>
         </div>
       </div>
     </div>
   );
-} 
+}

@@ -58,7 +58,7 @@ export default function PrivacyPage() {
               <span className="bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4">1</span>
               Information We Collect
             </h2>
-            
+
             <div className="space-y-6">
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-gray-800">1.1 Information You Provide</h3>
@@ -189,7 +189,7 @@ export default function PrivacyPage() {
               <span className="bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4">5</span>
               Your Rights & Choices
             </h2>
-            
+
             <div className="space-y-6">
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-gray-800">5.1 Access & Correction</h3>

@@ -59,17 +59,17 @@ export default function Home() {
       <header className="sticky top-0 z-40 bg-white/95 border-b border-gray-200 shadow-md transition-all duration-300 backdrop-blur-md">
         <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4 relative">
           <div className="flex items-center gap-2 font-extrabold text-red-600 text-2xl tracking-tight select-none">
-            <HomeIcon className="w-8 h-8" /> 
+            <HomeIcon className="w-8 h-8" />
             <span className="hidden md:inline">YourNextLease</span>
           </div>
           <div className="hidden md:flex gap-8 font-medium text-base items-center">
-            <button 
+            <button
               onClick={() => router.push('/search-results')}
               className="hover:text-red-600 hover:underline underline-offset-4 transition-colors bg-transparent border-none p-0 m-0 cursor-pointer"
             >
               Find a Room
             </button>
-            <button 
+            <button
               onClick={() => {
                 if (!user) {
                   setAuthOpen('login');
@@ -90,7 +90,7 @@ export default function Home() {
               Join Community
             </a>
             {!loading && user && (
-              <button 
+              <button
                 onClick={() => router.push('/dashboard')}
                 className="hover:text-red-600 hover:underline underline-offset-4 transition-colors bg-transparent border-none p-0 m-0 cursor-pointer"
               >
@@ -148,20 +148,20 @@ export default function Home() {
                 <Button onClick={() => setAuthOpen('signup')} className="bg-red-600 text-white px-6 py-2 rounded-full shadow-md hover:bg-red-700 focus:ring-2 focus:ring-red-300 font-semibold transition-all text-base">Sign Up</Button>
               </>
             )}
-        </div>
+          </div>
           <button className="md:hidden text-2xl text-red-600 p-2 rounded-full hover:bg-red-50 transition" aria-label="Open menu" onClick={() => setMobileMenuOpen(v => !v)}>
             <Menu className="w-7 h-7" />
           </button>
           {/* Mobile Dropdown */}
           {mobileMenuOpen && (
             <div className="absolute right-4 top-14 bg-white border border-gray-200 rounded-xl shadow-lg flex flex-col gap-2 p-4 w-48 md:hidden animate-fade-in z-50">
-              <button 
+              <button
                 onClick={() => { setMobileMenuOpen(false); router.push('/search-results'); }}
                 className="py-2 px-3 rounded hover:bg-red-50 hover:text-red-600 transition-colors text-left w-full bg-transparent border-none cursor-pointer"
               >
                 Find a Room
               </button>
-              <button 
+              <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   if (!user) {
@@ -184,7 +184,7 @@ export default function Home() {
                 Join Community
               </a>
               {!loading && user && (
-                <button 
+                <button
                   onClick={() => { setMobileMenuOpen(false); router.push('/dashboard'); }}
                   className="py-2 px-3 rounded hover:bg-red-50 hover:text-red-600 transition-colors text-left w-full bg-transparent border-none cursor-pointer"
                 >
@@ -199,10 +199,10 @@ export default function Home() {
                     aria-label="Open user menu"
                   >
                     <div className="relative">
-                    <Avatar className="w-8 h-8 border-2 border-red-200">
-                      <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'User'} />
-                      <AvatarFallback className="bg-red-100 text-red-600 font-bold">{user.displayName?.[0] || 'U'}</AvatarFallback>
-                    </Avatar>
+                      <Avatar className="w-8 h-8 border-2 border-red-200">
+                        <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'User'} />
+                        <AvatarFallback className="bg-red-100 text-red-600 font-bold">{user.displayName?.[0] || 'U'}</AvatarFallback>
+                      </Avatar>
                       {userProfile?.verifiedUniversity?.isVerified && (
                         <div className="absolute -bottom-0.5 -right-0.5">
                           <VerifiedBadge university={userProfile.verifiedUniversity} size="xs" showTooltip={false} />
@@ -259,16 +259,16 @@ export default function Home() {
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-red-600">
                 <MapPin className="h-4 w-4" />
               </span>
-              <Input 
+              <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-10 pl-10 pr-4 py-2 text-base font-normal rounded-lg border border-gray-200 bg-white text-gray-700 focus:bg-gray-50 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition-all w-full" 
-                placeholder="City Name" 
+                className="h-10 pl-10 pr-4 py-2 text-base font-normal rounded-lg border border-gray-200 bg-white text-gray-700 focus:bg-gray-50 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition-all w-full"
+                placeholder="City Name"
               />
             </div>
             {/* Dropdown for 'Look for' */}
             <div className="relative w-full md:w-36">
-              <select 
+              <select
                 value={lookFor}
                 onChange={(e) => setLookFor(e.target.value)}
                 className="w-full h-10 appearance-none px-4 py-2 text-base font-normal rounded-lg border border-gray-200 bg-white text-gray-700 focus:bg-gray-50 focus:border-red-600 focus:ring-2 focus:ring-red-200 transition-all pr-10"
@@ -308,7 +308,7 @@ export default function Home() {
                 </PopoverContent>
               </Popover>
             </div>
-            <Button 
+            <Button
               onClick={() => {
                 // Basic validation - at least one search criteria should be provided
                 if (!searchQuery && !lookFor && !fromDate && !toDate) {
@@ -316,19 +316,19 @@ export default function Home() {
                   router.push('/search-results');
                   return;
                 }
-                
+
                 const searchParams = new URLSearchParams();
                 if (searchQuery && searchQuery.trim()) searchParams.set('city', searchQuery.trim());
                 if (lookFor && lookFor.trim()) searchParams.set('lookFor', lookFor.trim());
                 if (fromDate) searchParams.set('fromDate', fromDate.toISOString());
                 if (toDate) searchParams.set('toDate', toDate.toISOString());
-                
+
                 // Validate date range if both dates are provided
                 if (fromDate && toDate && fromDate > toDate) {
                   alert('Start date cannot be after end date');
                   return;
                 }
-                
+
                 router.push(`/search-results?${searchParams.toString()}`);
               }}
               className="bg-red-600 text-white font-medium px-6 py-2 rounded-lg shadow-sm hover:bg-red-700 focus:ring-2 focus:ring-red-300 flex items-center gap-1 transition-all w-full md:w-auto mt-2 md:mt-0"
@@ -337,7 +337,7 @@ export default function Home() {
             </Button>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button 
+            <Button
               onClick={() => router.push('/search-results?city=Tempe')}
               className="text-red-600 font-semibold px-6 py-5 md:py-4 rounded-full shadow-md focus:ring-2 focus:ring-red-300 transition-all text-sm bg-white hover:bg-red-50 hover:text-red-700"
             >
@@ -368,10 +368,10 @@ export default function Home() {
       <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white" id="comparison">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             className="text-center mb-12"
           >
@@ -387,7 +387,7 @@ export default function Home() {
 
           {/* Comparison Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            
+
             {/* WhatsApp Card - The Pain */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -402,12 +402,12 @@ export default function Home() {
                   <div className="absolute bottom-8 right-8 w-32 h-32 bg-gray-400 rounded-full blur-xl" />
                   <div className="absolute top-1/2 left-1/3 w-16 h-16 bg-gray-400 rounded-full blur-xl" />
                 </div>
-                
+
                 {/* Header */}
                 <div className="relative flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-gray-300 rounded-xl flex items-center justify-center">
                     <svg className="w-7 h-7 text-gray-500" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                     </svg>
                   </div>
                   <div>
@@ -415,7 +415,7 @@ export default function Home() {
                     <p className="text-sm text-gray-400">The old way</p>
                   </div>
                 </div>
-                
+
                 {/* Pain Points */}
                 <ul className="relative space-y-4">
                   {[
@@ -426,7 +426,7 @@ export default function Home() {
                     'Time wasters & spam messages',
                     'No credibility or verification',
                   ].map((item, i) => (
-                    <motion.li 
+                    <motion.li
                       key={i}
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -443,7 +443,7 @@ export default function Home() {
                     </motion.li>
                   ))}
                 </ul>
-                
+
                 {/* Faded overlay effect */}
                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-100 to-transparent pointer-events-none" />
               </div>
@@ -460,7 +460,7 @@ export default function Home() {
                 {/* Glow effect */}
                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-red-200 rounded-full blur-3xl opacity-50" />
                 <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-red-100 rounded-full blur-2xl opacity-40" />
-                
+
                 {/* Header */}
                 <div className="relative flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -475,7 +475,7 @@ export default function Home() {
                     BETTER
                   </span>
                 </div>
-                
+
                 {/* Benefits */}
                 <ul className="relative space-y-4">
                   {[
@@ -486,7 +486,7 @@ export default function Home() {
                     'Only real leads — no spam or random group messages',
                     'Higher credibility → more responses',
                   ].map((item, i) => (
-                    <motion.li 
+                    <motion.li
                       key={i}
                       initial={{ opacity: 0, x: 10 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -508,17 +508,17 @@ export default function Home() {
           </div>
 
           {/* Bottom CTA */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.4 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
             className="mt-12 text-center"
           >
             <p className="text-gray-600 mb-6 text-lg">
               Stop posting in 20 groups. Start with YNL.
             </p>
-            <Button 
+            <Button
               onClick={() => {
                 if (!user) {
                   setAuthOpen('signup');
@@ -538,10 +538,10 @@ export default function Home() {
       <section className="py-20 px-4 bg-white text-center" id="how">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             className="mb-16"
           >
@@ -560,44 +560,44 @@ export default function Home() {
               <svg width="100%" height="12" viewBox="0 0 100 12" preserveAspectRatio="none">
                 <defs>
                   <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style={{stopColor: '#fecaca', stopOpacity: 0.8}} />
-                    <stop offset="25%" style={{stopColor: '#f87171', stopOpacity: 1}} />
-                    <stop offset="50%" style={{stopColor: '#ef4444', stopOpacity: 1}} />
-                    <stop offset="75%" style={{stopColor: '#f87171', stopOpacity: 1}} />
-                    <stop offset="100%" style={{stopColor: '#fecaca', stopOpacity: 0.8}} />
+                    <stop offset="0%" style={{ stopColor: '#fecaca', stopOpacity: 0.8 }} />
+                    <stop offset="25%" style={{ stopColor: '#f87171', stopOpacity: 1 }} />
+                    <stop offset="50%" style={{ stopColor: '#ef4444', stopOpacity: 1 }} />
+                    <stop offset="75%" style={{ stopColor: '#f87171', stopOpacity: 1 }} />
+                    <stop offset="100%" style={{ stopColor: '#fecaca', stopOpacity: 0.8 }} />
                   </linearGradient>
                   <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style={{stopColor: '#fecaca', stopOpacity: 0.4}} />
-                    <stop offset="50%" style={{stopColor: '#f87171', stopOpacity: 0.6}} />
-                    <stop offset="100%" style={{stopColor: '#fecaca', stopOpacity: 0.4}} />
+                    <stop offset="0%" style={{ stopColor: '#fecaca', stopOpacity: 0.4 }} />
+                    <stop offset="50%" style={{ stopColor: '#f87171', stopOpacity: 0.6 }} />
+                    <stop offset="100%" style={{ stopColor: '#fecaca', stopOpacity: 0.4 }} />
                   </linearGradient>
                 </defs>
                 {/* Main wave */}
-                <path 
-                  d="M0,6 Q20,2 40,6 T80,6 T100,6" 
-                  stroke="url(#waveGradient1)" 
-                  strokeWidth="3" 
-                  fill="none" 
+                <path
+                  d="M0,6 Q20,2 40,6 T80,6 T100,6"
+                  stroke="url(#waveGradient1)"
+                  strokeWidth="3"
+                  fill="none"
                   strokeLinecap="round"
                   className="animate-pulse"
                 />
                 {/* Secondary wave for depth */}
-                <path 
-                  d="M0,6 Q30,4 60,6 T100,6" 
-                  stroke="url(#waveGradient2)" 
-                  strokeWidth="1.5" 
-                  fill="none" 
+                <path
+                  d="M0,6 Q30,4 60,6 T100,6"
+                  stroke="url(#waveGradient2)"
+                  strokeWidth="1.5"
+                  fill="none"
                   strokeLinecap="round"
                   opacity="0.6"
                 />
               </svg>
             </div>
-            
+
             {/* Step 1: Sign Up */}
-            <motion.div 
-              whileInView={{ opacity: 1, y: 0 }} 
-              initial={{ opacity: 0, y: 30 }} 
-              transition={{ duration: 0.6, delay: 0.1 }} 
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
               className="group relative pt-8"
             >
@@ -605,7 +605,7 @@ export default function Home() {
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg z-10">
                 1
               </div>
-              
+
               {/* Card */}
               <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group-hover:scale-105 relative">
                 {/* Icon */}
@@ -614,13 +614,13 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </div>
-                
+
                 {/* Content */}
                 <h3 className="text-xl font-bold text-gray-900 mb-3">Sign Up</h3>
                 <p className="text-gray-600 leading-relaxed">
                   Create your free account as a host or home seeker in seconds.
                 </p>
-                
+
                 {/* Checkmark */}
                 <div className="mt-4 flex items-center justify-center">
                   <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
@@ -633,10 +633,10 @@ export default function Home() {
             </motion.div>
 
             {/* Step 2: Search Listings */}
-            <motion.div 
-              whileInView={{ opacity: 1, y: 0 }} 
-              initial={{ opacity: 0, y: 30 }} 
-              transition={{ duration: 0.6, delay: 0.2 }} 
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
               className="group relative pt-8"
             >
@@ -644,7 +644,7 @@ export default function Home() {
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg z-10">
                 2
               </div>
-              
+
               {/* Card */}
               <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group-hover:scale-105 relative">
                 {/* Icon */}
@@ -653,13 +653,13 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
-                
+
                 {/* Content */}
                 <h3 className="text-xl font-bold text-gray-900 mb-3">Search Listings</h3>
                 <p className="text-gray-600 leading-relaxed">
                   Browse verified listings by city, budget, university, and preferences.
                 </p>
-                
+
                 {/* Checkmark */}
                 <div className="mt-4 flex items-center justify-center">
                   <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
@@ -672,10 +672,10 @@ export default function Home() {
             </motion.div>
 
             {/* Step 3: Connect & Book */}
-            <motion.div 
-              whileInView={{ opacity: 1, y: 0 }} 
-              initial={{ opacity: 0, y: 30 }} 
-              transition={{ duration: 0.6, delay: 0.3 }} 
+            <motion.div
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
               className="group relative pt-8"
             >
@@ -683,7 +683,7 @@ export default function Home() {
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg z-10">
                 3
               </div>
-              
+
               {/* Card */}
               <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group-hover:scale-105 relative">
                 {/* Icon */}
@@ -692,13 +692,13 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                 </div>
-                
+
                 {/* Content */}
                 <h3 className="text-xl font-bold text-gray-900 mb-3">Connect & Book</h3>
                 <p className="text-gray-600 leading-relaxed">
                   Message hosts directly, ask questions, and book your next home securely.
                 </p>
-                
+
                 {/* Checkmark */}
                 <div className="mt-4 flex items-center justify-center">
                   <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
@@ -712,17 +712,17 @@ export default function Home() {
           </div>
 
           {/* Bottom CTA */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.4 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
             className="mt-12 text-center"
           >
             <p className="text-gray-600 mb-6">
               Ready to get started? It only takes a few minutes!
             </p>
-            <Button 
+            <Button
               onClick={() => {
                 if (!user) {
                   setAuthOpen('signup');
@@ -740,7 +740,7 @@ export default function Home() {
 
       {/* WhatsApp Community Section */}
       <section className="py-16 px-4 bg-gray-50" id="community">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -755,56 +755,56 @@ export default function Home() {
                   {/* WhatsApp icon badge */}
                   <div className="absolute -top-3 -left-3 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg z-10 transition-all duration-300 ease-out group-hover:scale-125">
                     <svg className="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                     </svg>
                   </div>
                   {/* QR Code Image */}
-                  <div 
+                  <div
                     className="bg-white p-3 rounded-2xl border border-gray-100 transition-all duration-300 ease-out group-hover:scale-110"
                     style={{ boxShadow: '0 8px 40px -8px rgba(34, 197, 94, 0.35), 0 4px 16px -4px rgba(0, 0, 0, 0.1)' }}
                   >
-                    <img 
-                      src="/images/QRCODE.png" 
-                      alt="Scan to join YNL WhatsApp Community" 
+                    <img
+                      src="/images/QRCODE.png"
+                      alt="Scan to join YNL WhatsApp Community"
                       className="w-44 h-44 md:w-52 md:h-52 object-contain"
                     />
                   </div>
                   <p className="text-center text-sm text-gray-500 mt-3 font-medium">Scan to join</p>
                 </div>
               </div>
-              
+
               {/* Right side - Content */}
               <div className="w-full md:w-3/5 p-8 md:p-10 text-center md:text-left">
                 <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                   </svg>
                   Official Community
                 </div>
-                
+
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
                   Join Our Community
                 </h2>
-                
+
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  Connect with ASU students looking for housing. Get instant updates on new listings, 
+                  Connect with ASU students looking for housing. Get instant updates on new listings,
                   roommate tips, and housing advice from fellow Sun Devils.
                 </p>
-                
+
                 <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-                  <a 
+                  <a
                     href="https://chat.whatsapp.com/F6AIVNsVXlT7Ana3ZLcXJO"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                     </svg>
                     Join WhatsApp Group
                   </a>
                 </div>
-                
+
                 <div className="mt-6 flex items-center gap-4 justify-center md:justify-start text-sm text-gray-500">
                   <span className="flex items-center gap-1">
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -822,13 +822,13 @@ export default function Home() {
               </div>
             </div>
           </div>
-            </motion.div>
+        </motion.div>
       </section>
 
       {/* CTA Banner */}
       <section className="bg-gradient-to-r from-red-500 to-red-700 text-white py-10 px-4 text-center">
         <h2 className="text-2xl md:text-3xl font-semibold mb-4 tracking-tight">Ready to list your space?</h2>
-        <Button 
+        <Button
           onClick={() => {
             if (!user) {
               setAuthOpen('login');

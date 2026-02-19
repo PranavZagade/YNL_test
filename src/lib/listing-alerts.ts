@@ -4,10 +4,10 @@ import { collection, query, where, getDocs, Timestamp, onSnapshot, orderBy, getD
 // Helper function for better city matching
 const normalizeCity = (city: string): string => {
   if (!city) return '';
-  
+
   // Remove all non-alphanumeric characters and convert to lowercase
   let normalized = city.toLowerCase().replace(/[^a-z0-9]/g, '');
-  
+
   // Handle common city variations
   const cityVariations: { [key: string]: string[] } = {
     'newyork': ['newyork', 'newyorkcity', 'nyc', 'manhattan', 'brooklyn', 'queens', 'bronx', 'statenisland'],
@@ -153,14 +153,14 @@ const normalizeCity = (city: string): string => {
     'topeka': ['topeka', 'top', 'kansas'],
     'honolulu': ['honolulu', 'hnl', 'hawaii']
   };
-  
+
   // Check if this city has known variations
   for (const [standard, variations] of Object.entries(cityVariations)) {
     if (variations.includes(normalized)) {
       return standard;
     }
   }
-  
+
   return normalized;
 };
 
@@ -215,7 +215,7 @@ export function startListingAlertListener() {
           id: change.doc.id,
           ...change.doc.data()
         } as Listing;
-        
+
         console.log('🆕 New listing detected:', newListing.id);
         console.log('📋 New listing data:', {
           id: newListing.id,
@@ -226,7 +226,7 @@ export function startListingAlertListener() {
           moveOut: newListing.moveOut,
           title: newListing.title
         });
-        
+
         // Check alerts for the new listing
         checkListingAlerts(newListing);
       } else if (change.type === 'modified') {
@@ -234,7 +234,7 @@ export function startListingAlertListener() {
           id: change.doc.id,
           ...change.doc.data()
         } as Listing;
-        
+
         console.log('✏️ Updated listing detected:', updatedListing.id);
         console.log('📋 Updated listing data:', {
           id: updatedListing.id,
@@ -245,7 +245,7 @@ export function startListingAlertListener() {
           moveOut: updatedListing.moveOut,
           title: updatedListing.title
         });
-        
+
         // Check alerts for the updated listing
         checkListingAlerts(updatedListing);
       }
@@ -276,29 +276,29 @@ export async function checkListingAlerts(listing: Listing) {
       moveOut: listing.moveOut,
       title: listing.title
     });
-    
+
     // Get all active listing alerts
     const alertsRef = collection(db, 'listingAlerts');
     const alertsQuery = query(alertsRef, where('isActive', '==', true));
     const alertsSnapshot = await getDocs(alertsQuery);
-    
+
     console.log('🔔 Found', alertsSnapshot.size, 'active alerts to check');
-    
+
     // Check if we've already sent emails for this listing
     const sentEmailsRef = collection(db, 'sentListingAlertEmails');
     const sentEmailsQuery = query(sentEmailsRef, where('listingId', '==', listing.id));
     const sentEmailsSnapshot = await getDocs(sentEmailsQuery);
-    
+
     // Create a set of alert IDs that have already received emails for this listing
     const sentAlertIds = new Set(sentEmailsSnapshot.docs.map(doc => doc.data().alertId));
-    
+
     console.log('📧 Already sent emails for alerts:', Array.from(sentAlertIds));
-    
+
     const matchingAlerts: any[] = [];
-    
+
     alertsSnapshot.forEach((doc) => {
       const alert = doc.data();
-      
+
       console.log('🔔 Checking alert:', {
         id: doc.id,
         city: alert.city,
@@ -306,31 +306,31 @@ export async function checkListingAlerts(listing: Listing) {
         moveInDate: alert.moveInDate,
         moveOutDate: alert.moveOutDate
       });
-      
+
       // City matching (improved normalization for variations)
       const alertCity = normalizeCity(alert.city);
       const listingCity = normalizeCity(listing.city);
-      
+
       console.log('🏙️ City matching in real-time listener:', {
         alertCity: alertCity,
         listingCity: listingCity,
         originalAlertCity: alert.city,
         originalListingCity: listing.city
       });
-      
+
       if (alertCity !== listingCity) return;
-      
+
       // Apartment type matching
       if (alert.apartmentType !== listing.apartmentType) return;
-      
+
       // Date range matching (listing availability must cover alert date range)
       const alertFromDate = alert.moveInDate.toDate();
       const alertToDate = alert.moveOutDate.toDate();
-      
+
       // Convert listing dates to Date objects (handle both Timestamp and Date)
       let listingMoveIn: Date;
       let listingMoveOut: Date;
-      
+
       if (listing.moveIn?.toDate) {
         listingMoveIn = listing.moveIn.toDate();
       } else if (listing.moveIn instanceof Date) {
@@ -342,7 +342,7 @@ export async function checkListingAlerts(listing: Listing) {
       } else {
         listingMoveIn = new Date();
       }
-      
+
       if (listing.moveOut?.toDate) {
         listingMoveOut = listing.moveOut.toDate();
       } else if (listing.moveOut instanceof Date) {
@@ -352,20 +352,20 @@ export async function checkListingAlerts(listing: Listing) {
       } else {
         listingMoveOut = new Date();
       }
-      
+
       console.log('📅 Date matching in real-time listener:', {
         alertFromDate: alertFromDate.toISOString().split('T')[0],
         alertToDate: alertToDate.toISOString().split('T')[0],
         listingMoveIn: listingMoveIn.toISOString().split('T')[0],
         listingMoveOut: listingMoveOut.toISOString().split('T')[0]
       });
-      
+
       // Apply the SAME formula as search-results page: moveInDate <= fromDate && moveOutDate >= toDate
       // This means: listing must be available for the ENTIRE alert period
       const isDateMatch = listingMoveIn <= alertFromDate && listingMoveOut >= alertToDate;
-      
+
       console.log('✅ Date match result in real-time listener:', isDateMatch);
-      
+
       if (isDateMatch && !sentAlertIds.has(doc.id)) {
         // Only add alerts that haven't received emails yet
         matchingAlerts.push({
@@ -376,9 +376,9 @@ export async function checkListingAlerts(listing: Listing) {
         console.log('📧 Skipping alert', doc.id, '- email already sent for this listing');
       }
     });
-    
+
     console.log('🎯 Found', matchingAlerts.length, 'new matching alerts for listing:', listing.id);
-    
+
     if (matchingAlerts.length > 0) {
       // Send email notifications for each matching alert
       for (const alert of matchingAlerts) {
@@ -389,12 +389,12 @@ export async function checkListingAlerts(listing: Listing) {
             console.log('❌ User not found for alert:', alert.id);
             continue;
           }
-          
+
           const userData = userDoc.data();
-          
+
           // Note: Removed online user check - now sending emails regardless of user status
           console.log('📧 Sending listing alert email for alert:', alert.id);
-          
+
           // Send email with the single matching listing
           const emailResponse = await fetch('/api/send-listing-alert', {
             method: 'POST',
@@ -421,7 +421,7 @@ export async function checkListingAlerts(listing: Listing) {
 
           if (emailResponse.ok) {
             console.log('✅ Listing alert email sent successfully for alert:', alert.id);
-            
+
             // Record that this email was sent to prevent duplicates
             try {
               await setDoc(doc(db, 'sentListingAlertEmails', `${listing.id}_${alert.id}`), {
@@ -438,7 +438,7 @@ export async function checkListingAlerts(listing: Listing) {
           } else {
             console.error('❌ Failed to send listing alert email for alert:', alert.id, emailResponse.status);
           }
-          
+
         } catch (emailError) {
           console.error('❌ Error sending email for alert:', alert.id, emailError);
         }
