@@ -179,6 +179,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
 
+        // 7. Backend Listing Alerts
+        // Note: We don't await this so the API responds instantly to the Admin frontend
+        import('@/lib/server-listing-alerts').then(module => {
+            module.checkServerListingAlerts(listingRef.id, newListingData).catch(err => {
+                console.error('[API] Error in background alert task:', err);
+            });
+        });
+
         return res.status(200).json({
             success: true,
             listingId: listingRef.id,
