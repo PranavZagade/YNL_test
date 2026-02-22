@@ -1,9 +1,9 @@
-
 import { NextApiRequest, NextApiResponse } from 'next';
 import { adminAuth, adminDb, FieldValue } from '@/lib/firebase-admin';
 import { Resend } from 'resend';
 import { renderAccountSetupEmail } from '@/lib/email-renderer';
 import { google } from 'googleapis';
+import { getUniversityFromEmail } from '@/lib/user-management';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -54,6 +54,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
 
+        // Check for university verification
+        const verifiedUniversity = getUniversityFromEmail(email);
+
         const uid = userRecord.uid;
         console.log('User id was generated:', uid);
 
@@ -73,11 +76,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 updatedAt: FieldValue.serverTimestamp(),
                 photoURL: userRecord.photoURL || null,
                 isProfileComplete: false,
+                verifiedUniversity: verifiedUniversity || null,
             });
         }
 
         // 4. Create Listing Linked to User
-        const newListingData = {
+        const newListingData: any = {
             ...listingFields,
             userId: uid, // Per user request: use userId mapped to uid
             // ownerUid: uid, // Removing ownerUid to keep it clean if userId is the standard
@@ -85,6 +89,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             status: 'active',
             isApproved: true,
             approvedAt: FieldValue.serverTimestamp(),
+            ownerVerifiedUniversity: verifiedUniversity || null,
         };
 
         // Handle Date/Timestamp fields

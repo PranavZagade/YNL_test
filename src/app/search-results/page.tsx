@@ -884,10 +884,20 @@ function SearchResultsPage() {
               style={{ width: '100%', height: '100%', borderRadius: '1rem' }}
               attributionControl={false}
             >
-              {listings.map((listing) => {
+              {listings.map((listing, i) => {
                 // Try to get coordinates from mapsLink field
-                const coords = parseLatLngFromGoogleMapsLink(listing.mapsLink || '');
-                if (!coords) return null;
+                const originalCoords = parseLatLngFromGoogleMapsLink(listing.mapsLink || '');
+                if (!originalCoords) return null;
+
+                // Add a tiny random offset (jitter) so listings at the exact same location don't perfectly overlap
+                // We use the listing strictly to seed a consistent-ish random hash based on its id, or just use a pseudo-random value
+                // Math.random() is fine here because a small variance on render isn't harmful
+                // 0.0003 is roughly a ~30 meter maximum scatter radius 
+                const coords = {
+                  lat: originalCoords.lat + (Math.random() - 0.5) * 0.0003,
+                  lng: originalCoords.lng + (Math.random() - 0.5) * 0.0003
+                };
+
                 return (
                   <Marker
                     key={listing.id}
@@ -941,10 +951,17 @@ function SearchResultsPage() {
             style={{ width: '100vw', height: '100vh' }}
             attributionControl={false}
           >
-            {listings.map((listing) => {
+            {listings.map((listing, i) => {
               // Try to get coordinates from mapsLink field
-              const coords = parseLatLngFromGoogleMapsLink(listing.mapsLink || '');
-              if (!coords) return null;
+              const originalCoords = parseLatLngFromGoogleMapsLink(listing.mapsLink || '');
+              if (!originalCoords) return null;
+
+              // Add identical jitter logic for the mobile map
+              const coords = {
+                lat: originalCoords.lat + (Math.random() - 0.5) * 0.0003,
+                lng: originalCoords.lng + (Math.random() - 0.5) * 0.0003
+              };
+
               return (
                 <Marker
                   key={listing.id}
